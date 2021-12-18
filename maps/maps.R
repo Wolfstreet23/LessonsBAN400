@@ -16,7 +16,8 @@
 library(mdsr)        # Companion R package to the book, containing data
 library(sf)          # For spatial data, co-authoured by NHH Prof. Roger Bivand 
 library(ggmap)       # For downloading streetmaps as ggplot2-objects.
-library(tidyverse)   # Data wrangling etc
+library(tidyverse)# Data wrangling etc
+library(ggplot2)
 plot(CholeraDeaths)  # Simple plot of the data
 
 # Look at the data. The format is a little bit special. The simplest way to
@@ -40,6 +41,8 @@ folder <- "SnowGIS_SHP/SnowGIS_SHP"     # The folder containing the shapefiles.
 list.files(folder)                      # List the files in the folders
 st_layers(folder)                       # List the "layers" in this folder (sets 
                                         # of shapefiles).
+
+dim(CholeraDeaths)
 
 # We will begin by loading in the "Cholera_Deaths"-layer
 ColeraDeaths <- read_sf(folder, layer = "Cholera_Deaths")
@@ -194,7 +197,7 @@ ggplot(tanzania) +
 # to install this yourself by following the link below, and that also requires
 # the installation of a font. I you want to use another theme, replace (or take
 # out) theme_fira() and scale_color_fira() below.
-library(firatheme)                # My favourite ggplot theme: https://github.com/vankesteren/firatheme
+#library(firatheme)                # My favourite ggplot theme: https://github.com/vankesteren/firatheme
 ggplot(tanzania) +
   geom_sf(aes(geometry = geometry), fill = "#00000050") +
   geom_point(aes(x = lon_deg, y = lat_deg, colour = water_source), 
@@ -203,8 +206,8 @@ ggplot(tanzania) +
   ylab("") +
   labs(colour = "") +
   ggtitle("Water sources in Tanzania") +
-  theme_fira() +
-  scale_colour_fira(na.value = "darkred") +
+# theme_fira() +
+# scale_colour_fira(na.value = "darkred") +
   theme(axis.line = element_blank(),
         panel.grid.major = element_line(colour = "#00000020"), 
         axis.text = element_text(colour = "#00000050"))
@@ -233,13 +236,13 @@ ggplot(st_geometry(tanzania)) +
   ylab("") +
   labs(colour = "") +
   ggtitle("Water sources in Tanzania") +
-  theme_fira() +
-  scale_colour_fira(na.value = "darkred") +
+  #theme_fira() +
+  #scale_colour_fira(na.value = "darkred") +
   theme(axis.line = element_blank(),
         panel.grid.major = element_line(colour = "#00000020", 
                                         inherit.blank = FALSE),
-        axis.text = element_text(colour = "#00000050")) +
-  geom_sf(aes(geometry = geometry), data = tan_roads, colour = "#00000050") +
+        axis.text = element_text(colour = "#00000050")) + 
+  geom_sf(aes(geometry = geometry), data = tan_roads, colour = "#00000050") + #Everything above all this line is copying and pasting from the previous plot
   geom_sf(aes(geometry = geometry), data = tan_cities, size = 2) +
   geom_text(aes(x = X, y = Y, label = name), 
             data = tan_cities, 
@@ -303,7 +306,7 @@ ggplot(water_africa) +
     high = "red") +
   ggtitle("Share of active water sources") +
   labs(fill = "") +
-  theme_fira() +
+# theme_fira() +
   theme(axis.line = element_blank(),
         panel.grid.major = element_line(colour = "#00000020", 
                                         inherit.blank = FALSE),
